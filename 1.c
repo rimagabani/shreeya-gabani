@@ -1,43 +1,44 @@
-#include<stdio.h>
-
-
+#include <stdio.h>
 
 int main() {
-    int size;
-    
-    
-    printf("Enter the array's size: ");
-    scanf("%d", &size);
-    
-    
-    int arr[size];
-    
-    
-    printf("Enter array's elements:\n");
-    for (int i = 0; i < size; i++) {
-        printf("a[%d] = ", i);
-        scanf("%d", &arr[i]);
+    FILE *evenFile, *oddFile;
+    int i;
+
+    evenFile = fopen("even_file.txt", "w");
+    if (evenFile == NULL) {
+        printf("Error opening even file.");
+        return 1;
     }
-    
-    
-    printf("Negative elements from an Array: ");
-    hasNegative=false;
-    for (int i = 0; i < size; ++i) {
-        if (arr[i] < 0) {
-            if (hasNegative) {
-                printf(", ");
-            }
-            printf("%d", arr[i]);
-            hasNegative = true; 
+
+
+    oddFile = fopen("odd_file.txt", "w");
+    if (oddFile == NULL) {
+        printf("Error opening odd file.");
+        fclose(evenFile);
+        return 1;
+    }
+
+    for (i = 50; i <= 70; i++) {
+        if (i % 2 == 0) {
+            fprintf(evenFile, "%d, ", i);
+        } else {
+            fprintf(oddFile, "%d, ", i);
         }
     }
-    if (!hasNegative) {
-        printf("No negative elements found.");
+
+
+    fclose(evenFile);
+    fclose(oddFile);
+
+    printf("Even numbers from even_file.txt: ");
+    for (i = 50; i <= 70; i += 2) {
+        printf("%d, ", i);
     }
-    printf("\n");
-    
+    printf("\nOdd numbers from odd_file.txt: ");
+    for (i = 51; i <= 69; i += 2) {
+        printf("%d, ", i);
+    }
+
     return 0;
 }
 
-
-    
